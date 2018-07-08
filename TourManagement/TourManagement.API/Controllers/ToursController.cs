@@ -20,7 +20,7 @@ namespace TourManagement.API.Controllers
         }
         
         [HttpGet]
-        [RequestHeaderMatchesMediaType("Accept", new[] { "application/vnd.marvin.tour+json" })]
+        [RequestHeaderMatchesMediaType("Accept", new[] { "application/json" })]
         public async Task<IActionResult> GetTours()
         {
             var toursFromRepo = await _tourManagementRepository.GetTours();
