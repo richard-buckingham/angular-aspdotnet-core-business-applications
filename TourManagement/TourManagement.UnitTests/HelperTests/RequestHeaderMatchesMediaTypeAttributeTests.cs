@@ -1,8 +1,4 @@
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ActionConstraints;
-using Microsoft.AspNetCore.Routing;
-using Moq;
-using System;
 using TourManagement.API.Helpers;
 using Xunit;
 
@@ -30,7 +26,7 @@ namespace TourManagement.UnitTests
         public void WhenHeaderTypeMatchesButMediaTypesNotMatched_ExpectNotAccepted()
         {
             // Arrange
-            var attribute = new RequestHeaderMatchesMediaTypeAttribute("Accept", new[] { "application/vnd.marvin.tourwhatever+json" });
+            var attribute = new RequestHeaderMatchesMediaTypeAttribute("Accept", new[] { "application/vnd.marvin.tourwithestimatedprofits+json" });
 
             var requestHeaders = new HeaderDictionary();
             requestHeaders.Add("Accept", new[] { "application/vnd.marvin.tour+json" });

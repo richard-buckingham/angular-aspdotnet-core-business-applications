@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourManagement.API", "TourManagement.API\TourManagement.API.csproj", "{61E771B2-EC8B-4416-9889-A50F4C1C8A50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourManagement.UnitTests", "TourManagement.UnitTests\TourManagement.UnitTests.csproj", "{6A19CA66-1762-4292-B9DB-7D946BF6E8F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourManagement.UnitTests", "TourManagement.UnitTests\TourManagement.UnitTests.csproj", "{6A19CA66-1762-4292-B9DB-7D946BF6E8F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourManagement.IntegrationTests", "TourManagement.IntegrationTests\TourManagement.IntegrationTests.csproj", "{89B9CF3A-CDE3-4B4F-8ADE-B6657F8A45D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{6A19CA66-1762-4292-B9DB-7D946BF6E8F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A19CA66-1762-4292-B9DB-7D946BF6E8F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A19CA66-1762-4292-B9DB-7D946BF6E8F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89B9CF3A-CDE3-4B4F-8ADE-B6657F8A45D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89B9CF3A-CDE3-4B4F-8ADE-B6657F8A45D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89B9CF3A-CDE3-4B4F-8ADE-B6657F8A45D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89B9CF3A-CDE3-4B4F-8ADE-B6657F8A45D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

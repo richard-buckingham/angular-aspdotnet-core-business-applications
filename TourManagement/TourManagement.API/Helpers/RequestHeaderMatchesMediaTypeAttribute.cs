@@ -25,6 +25,13 @@ namespace TourManagement.API.Helpers
             get { return 0; }
         }
 
+        public bool Accept(ActionConstraintContext context)
+        {
+            var requestHeaders = context.RouteContext.HttpContext.Request.Headers;
+
+            return AcceptRequestHeaders(requestHeaders);
+        }
+
         public bool AcceptRequestHeaders(IHeaderDictionary contextRequestHeaders)
         {
             // check request headers
@@ -49,13 +56,6 @@ namespace TourManagement.API.Helpers
             }
 
             return false;
-        }
-        
-        public bool Accept(ActionConstraintContext context)
-        {
-            var requestHeaders = context.RouteContext.HttpContext.Request.Headers;
-
-            return AcceptRequestHeaders(requestHeaders);
         }
     }
 }

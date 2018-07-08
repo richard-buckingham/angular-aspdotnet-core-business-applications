@@ -30,8 +30,21 @@ namespace TourManagement.API.Controllers
         }
 
 
-        [HttpGet("{tourId}", Name = "GetTour")]
+        [HttpGet("{tourId}")]
+        [RequestHeaderMatchesMediaType("Accept", new[] { "application/vnd.marvin.tour+json" })]
         public async Task<IActionResult> GetTour(Guid tourId)
+        {
+           return await GetSpecificTour<Tour>(tourId);
+        }
+
+        [HttpGet("{tourId}")]
+        [RequestHeaderMatchesMediaType("Accept", new[] { "application/vnd.marvin.tourwithestimatedprofits+json" })]
+        public async Task<IActionResult> GetTourWithEstimatedProfits(Guid tourId)
+        {
+            return await GetSpecificTour<TourWithEstimatedProfits>(tourId);
+        }
+
+        private async Task<IActionResult> GetSpecificTour<T>(Guid tourId) where T : class
         {
             var tourFromRepo = await _tourManagementRepository.GetTour(tourId);
 
@@ -40,9 +53,11 @@ namespace TourManagement.API.Controllers
                 return BadRequest();
             }
 
-            var tour = Mapper.Map<Tour>(tourFromRepo);
+            var tour = Mapper.Map<T>(tourFromRepo);
 
             return Ok(tour);
-        }        
+        }
+
+
     }
 }
