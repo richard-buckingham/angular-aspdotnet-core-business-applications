@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TourManagement.API.Dtos;
+using TourManagement.API.Helpers;
 using TourManagement.API.Services;
 
 namespace TourManagement.API.Controllers
@@ -19,6 +20,7 @@ namespace TourManagement.API.Controllers
         }
         
         [HttpGet]
+        [RequestHeaderMatchesMediaType("Accept", new[] { "application/vnd.marvin.tour+json" })]
         public async Task<IActionResult> GetTours()
         {
             var toursFromRepo = await _tourManagementRepository.GetTours();
