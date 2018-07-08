@@ -56,31 +56,6 @@ namespace TourManagement.API.Helpers
             var requestHeaders = context.RouteContext.HttpContext.Request.Headers;
 
             return AcceptRequestHeaders(requestHeaders);
-
-           // // check request headers
-           // // make this a testable function
-           // if (! requestHeaders.ContainsKey(_requestHeaderToMatch))
-           // {
-           //     return false;
-           // }
-
-           // // if one of the media types matches, return true
-           // // make this a testable function
-           // foreach (var mediaType in _mediaTypes.ToList())
-           // {
-           //     var matchingRequestHeader = requestHeaders[_requestHeaderToMatch];
-           //     var headerValues = matchingRequestHeader.ToString().Split(',').ToList();
-
-           //     foreach (var headerValue in headerValues)
-           //     {
-           //         if (String.Equals(headerValue, mediaType, StringComparison.OrdinalIgnoreCase))
-           //         {
-           //             return true;
-           //         }
-           //     }
-           // }
-  
-           //return false;
         }
     }
 }
