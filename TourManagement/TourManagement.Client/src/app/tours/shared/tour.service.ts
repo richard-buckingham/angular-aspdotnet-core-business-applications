@@ -5,9 +5,9 @@ import "rxjs/add/observable/throw";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/do";
 
-import { Tour } from "./tour.model";
+import { Tour } from "./models/tour.model";
 import { BaseService } from "../../shared/base.service";
-import { TourWithEstimatedProfits } from "./tour-with-estimated-profits.model";
+import { TourWithEstimatedProfits } from "./models/tour-with-estimated-profits.model";
 
 @Injectable()
 export class TourService extends BaseService {

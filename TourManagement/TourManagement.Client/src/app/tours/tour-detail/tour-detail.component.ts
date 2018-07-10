@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Tour } from "../shared/tour.model";
+import { Tour } from "../shared/models/tour.model";
 import { TourService } from "../shared/tour.service";
 import { ActivatedRoute } from "@angular/router";
 import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
