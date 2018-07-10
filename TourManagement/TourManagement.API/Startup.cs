@@ -28,14 +28,21 @@ namespace TourManagement.API
             {
                 setupAction.ReturnHttpNotAcceptable = true;
 
-                // get a reference to the defauilt json formatter
-                var jsonOutputFormatter = setupAction.OutputFormatters.OfType<JsonOutputFormatter>().FirstOrDefault();
-
                 // add the custom mediaTypes we want to support to the SupportedMediaTypes collection
+                // outputFormatter
+                var jsonOutputFormatter = setupAction.OutputFormatters.OfType<JsonOutputFormatter>().FirstOrDefault();
                 if (jsonOutputFormatter != null)
                 {
                     jsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tour+json");
                     jsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourwithestimatedprofits+json");
+                }
+
+                // inputFormatter
+                var jsonInputFormatter = setupAction.InputFormatters.OfType<JsonInputFormatter>().FirstOrDefault();
+                if (jsonInputFormatter != null)
+                {
+                    jsonInputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourforcreation+json");
+                    jsonInputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourwithmanagerforcreation+json");
                 }
 
             })
@@ -93,6 +100,7 @@ namespace TourManagement.API
 
             AutoMapper.Mapper.Initialize(config =>
             {
+                // Entities to DTO
                 config.CreateMap<Entities.Tour, Dtos.Tour>()
                     .ForMember(d => d.Band, o => o.MapFrom(s => s.Band.Name));
 
@@ -103,7 +111,12 @@ namespace TourManagement.API
 
                 config.CreateMap<Entities.Manager, Dtos.Manager>();
 
-                config.CreateMap<Entities.Show, Dtos.Show>(); 
+                config.CreateMap<Entities.Show, Dtos.Show>();
+
+                // DTO to entities
+                config.CreateMap<Dtos.TourForCreation, Entities.Tour>();
+                config.CreateMap<Dtos.TourWithManagerForCreation, Entities.Tour>();
+
             });
 
             // Enable CORS

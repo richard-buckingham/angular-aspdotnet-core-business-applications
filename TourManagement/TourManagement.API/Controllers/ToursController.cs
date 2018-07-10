@@ -30,7 +30,7 @@ namespace TourManagement.API.Controllers
         }
 
 
-        [HttpGet("{tourId}")]
+        [HttpGet("{tourId}", Name ="GetTour")]
         [RequestHeaderMatchesMediaType("Accept", new[] { "application/vnd.marvin.tour+json" })]
         public async Task<IActionResult> GetTour(Guid tourId)
         {
@@ -42,6 +42,36 @@ namespace TourManagement.API.Controllers
         public async Task<IActionResult> GetTourWithEstimatedProfits(Guid tourId)
         {
             return await GetSpecificTour<TourWithEstimatedProfits>(tourId);
+        }
+
+        [HttpPost]
+        [RequestHeaderMatchesMediaType("Content-Type", new[] { "application/vnd.marvin.tourforcreation+json" })]
+        public async Task<IActionResult> AddTour([FromBody] TourForCreation tour)
+        {
+            if (tour == null)
+            {
+                return BadRequest();
+            }
+
+            // validation of dto happens here
+
+            // return
+            return await AddSpecificTour(tour);
+        }
+
+        [HttpPost]
+        [RequestHeaderMatchesMediaType("Content-Type", new[] { "application/vnd.marvin.tourwithmanagerforcreation+json" })]
+        public async Task<IActionResult> AddTourWithManager([FromBody] TourWithManagerForCreation tour)
+        {
+            if (tour == null)
+            {
+                return BadRequest();
+            }
+
+            // validation of dto happens here
+
+            // return
+            return await AddSpecificTour(tour);
         }
 
         private async Task<IActionResult> GetSpecificTour<T>(Guid tourId) where T : class
@@ -58,6 +88,27 @@ namespace TourManagement.API.Controllers
             return Ok(tour);
         }
 
+        public async Task<IActionResult> AddSpecificTour<T>(T tour) where T : class
+        {
+            var tourEntity = Mapper.Map<Entities.Tour>(tour);
 
+            if (tourEntity.ManagerId == Guid.Empty)
+            {
+                tourEntity.ManagerId = new Guid("d3ac6ded-c492-43a1-b94b-72e57c09c930");
+            }
+
+            await _tourManagementRepository.AddTour(tourEntity);
+
+            if (!await _tourManagementRepository.SaveAsync())
+            {
+                throw new Exception("Adding a tour failed on save.");
+            }
+
+            var tourToReturn = Mapper.Map<Tour>(tourEntity);
+
+            return CreatedAtRoute("GetTour",
+                new { tourId = tourToReturn.TourId },
+                tourToReturn);
+        }
     }
 }
