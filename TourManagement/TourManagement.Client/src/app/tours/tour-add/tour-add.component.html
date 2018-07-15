@@ -6,12 +6,24 @@
   <div class="panel-body">
     <form class="form-horizontal" novalidate (ngSubmit)="addTour()" [formGroup]="tourForm">
       <fieldset>
+
         <div class="form-group">
           <label class="col-md-2 control-label" for="bandId">Band</label>
           <div class="col-md-8">
             <select class="form-control" formControlName="band" id="bandId">
               <option *ngFor="let band of bands" [ngValue]="band.bandId">
                 {{band.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="isAdmin">
+          <label class="col-md-2 control-label" for="managerId">Manager</label>
+          <div class="col-md-8">
+            <select class="form-control" formControlName="manager" id="managerId">
+              <option *ngFor="let manager of managers" [ngValue]="manager.managerId">
+                {{manager.name}}
               </option>
             </select>
           </div>

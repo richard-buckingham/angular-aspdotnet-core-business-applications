@@ -51,7 +51,7 @@ export class TourService extends BaseService {
   addTourWithManager(tourToAdd: TourWithManagerForCreation): Observable<Tour> {
     return this.http.post<Tour>(`${this.apiUrl}/tours`, tourToAdd, {
       headers: {
-        "Content-Type": "vnd.marvin.tourwithmanagerforcreation+json"
+        "Content-Type": "application/vnd.marvin.tourwithmanagerforcreation+json"
       }
     });
   }
