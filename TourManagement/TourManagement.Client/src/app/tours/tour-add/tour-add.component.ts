@@ -16,7 +16,7 @@ export class TourAddComponent implements OnInit, OnDestroy {
   public tourForm: FormGroup;
   bands: Band[];
   managers: Manager[];
-  public isAdmin: boolean = false;
+  public isAdmin: boolean = true;
 
   constructor(
     private masterDataService: MasterDataService,
