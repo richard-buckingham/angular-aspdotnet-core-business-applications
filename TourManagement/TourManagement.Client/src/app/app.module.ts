@@ -23,6 +23,7 @@ import { GlobalErrorHandler } from "./shared/global-error-handler";
 import { ErrorLoggerService } from "./shared/error-logger.service";
 import { HandleHttpErrorInterceptor } from "./shared/handle-http-error-interceptor";
 import { WriteOutJsonInterceptor } from "./shared/write-out-json-interceptor";
+import { EnsureAcceptHeaderinterceptor } from "./shared/interceptors/ensure-accept-headerinterceptor";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,13 @@ import { WriteOutJsonInterceptor } from "./shared/write-out-json-interceptor";
     FormsModule,
     ReactiveFormsModule
   ],
+  // interceptors are called in the order they are provided
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: EnsureAcceptHeaderinterceptor,
+      multi: true
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: WriteOutJsonInterceptor,

@@ -22,9 +22,7 @@ export class TourService extends BaseService {
   }
 
   getTour(tourId: string): Observable<Tour> {
-    return this.http.get<Tour>(`${this.apiUrl}/tours/${tourId}`, {
-      headers: { Accept: "application/vnd.marvin.tour+json" }
-    });
+    return this.http.get<Tour>(`${this.apiUrl}/tours/${tourId}`);
   }
 
   getTourWithEstimatedProfits(

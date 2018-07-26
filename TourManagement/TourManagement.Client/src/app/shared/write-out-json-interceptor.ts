@@ -7,9 +7,10 @@ export class WriteOutJsonInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    /*         return next.handle(request)
-            .do(data => console.log(JSON.stringify(data, null, '\t'))); */
+    return next
+      .handle(request)
+      .do(data => console.log(JSON.stringify(data, null, "\t")));
 
-    return next.handle(request).do(data => console.log("data = ", data));
+    // return next.handle(request).do(data => console.log("data = ", data));
   }
 }

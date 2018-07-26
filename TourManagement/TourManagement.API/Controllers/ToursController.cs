@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using TourManagement.API.Dtos;
 using TourManagement.API.Helpers;
 using TourManagement.API.Services;
+
 
 namespace TourManagement.API.Controllers
 {
@@ -32,6 +35,10 @@ namespace TourManagement.API.Controllers
         [HttpGet("{tourId}")]
         public async Task<IActionResult> GetDefaultTour(Guid tourId)
         {
+            if (Request.Headers.TryGetValue("Accept", out StringValues values))
+            {
+                Debug.WriteLine($"Accept Header(s): {string.Join(",", values)}");
+            }
             return await GetSpecificTour<Tour>(tourId);
         }
 
