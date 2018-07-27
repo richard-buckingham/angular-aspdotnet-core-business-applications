@@ -35,6 +35,8 @@ namespace TourManagement.API
                 {
                     jsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tour+json");
                     jsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourwithestimatedprofits+json");
+                    jsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourwithshows+json");
+                    jsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourwithestimatedprofitsandshows+json");
                 }
 
                 // inputFormatter
@@ -104,7 +106,14 @@ namespace TourManagement.API
                 config.CreateMap<Entities.Tour, Dtos.Tour>()
                     .ForMember(d => d.Band, o => o.MapFrom(s => s.Band.Name));
 
+                config.CreateMap<Entities.Tour, Dtos.TourWithShows>()
+                    .ForMember(d => d.Band, o => o.MapFrom(s => s.Band.Name));
+
+
                 config.CreateMap<Entities.Tour, Dtos.TourWithEstimatedProfits>()
+                    .ForMember(d => d.Band, o => o.MapFrom(s => s.Band.Name));
+
+                config.CreateMap<Entities.Tour, Dtos.TourWithEstimatedProfitsAndShows>()
                     .ForMember(d => d.Band, o => o.MapFrom(s => s.Band.Name));
 
                 config.CreateMap<Entities.Band, Dtos.Band>();
