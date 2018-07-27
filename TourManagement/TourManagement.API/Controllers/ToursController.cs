@@ -21,7 +21,9 @@ namespace TourManagement.API.Controllers
         {
             _tourManagementRepository = tourManagementRepository;
         }
-        
+
+        #region get
+
         [HttpGet]
         [RequestHeaderMatchesMediaType("Accept", new[] { "application/json" })]
         public async Task<IActionResult> GetTours()
@@ -71,6 +73,10 @@ namespace TourManagement.API.Controllers
             return await GetSpecificTour<TourWithEstimatedProfitsAndShows>(tourId, true);
         }
 
+        #endregion
+
+        #region post
+
         [HttpPost]
         [RequestHeaderMatchesMediaType("Content-Type", new[] { "application/json","application/vnd.marvin.tourforcreation+json" })]
         public async Task<IActionResult> AddTour([FromBody] TourForCreation tour)
@@ -100,6 +106,8 @@ namespace TourManagement.API.Controllers
             // return
             return await AddSpecificTour(tour);
         }
+
+        #endregion
 
         private async Task<IActionResult> GetSpecificTour<T>(Guid tourId, bool includeShows = false) where T : class
         {
