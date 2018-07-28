@@ -10,6 +10,8 @@ import { BaseService } from "../../shared/base.service";
 import { TourWithEstimatedProfits } from "./models/tour-with-estimated-profits.model";
 import { TourForCreation } from "./models/tour-for-creation.model";
 import { TourWithManagerForCreation } from "./models/tour-with-manager-for-creation.model";
+import { TourWithShows } from "./models/tour-with-shows.model";
+import { TourWithEstimatedProfitsAndShows } from "./models/tour-with-estimated-profits-and-shows.model";
 
 @Injectable()
 export class TourService extends BaseService {
@@ -17,6 +19,7 @@ export class TourService extends BaseService {
     super();
   }
 
+  // get methods
   getTours(): Observable<Tour[]> {
     return this.http.get<Tour[]>(`${this.apiUrl}/tours`);
   }
@@ -38,6 +41,28 @@ export class TourService extends BaseService {
     );
   }
 
+  getTourWithShows(tourId: string): Observable<TourWithShows> {
+    return this.http.get<TourWithShows>(`${this.apiUrl}/tours/${tourId}`, {
+      headers: {
+        Accept: "application/vnd.marvin.tourwithshows+json"
+      }
+    });
+  }
+
+  getTourWithEstimatedProfitsAndShows(
+    tourId: string
+  ): Observable<TourWithEstimatedProfitsAndShows> {
+    return this.http.get<TourWithEstimatedProfitsAndShows>(
+      `${this.apiUrl}/tours/${tourId}`,
+      {
+        headers: {
+          Accept: "application/vnd.marvin.tourwithestimatedprofitsandshows+json"
+        }
+      }
+    );
+  }
+
+  // add methods
   addTour(tourToAdd: TourForCreation): Observable<Tour> {
     return this.http.post<Tour>(`${this.apiUrl}/tours`, tourToAdd, {
       headers: {
