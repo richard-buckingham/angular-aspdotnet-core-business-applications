@@ -24,7 +24,7 @@ import { ErrorLoggerService } from "./shared/error-logger.service";
 import { HandleHttpErrorInterceptor } from "./shared/handle-http-error-interceptor";
 import { WriteOutJsonInterceptor } from "./shared/write-out-json-interceptor";
 import { EnsureAcceptHeaderinterceptor } from "./shared/interceptors/ensure-accept-headerinterceptor";
-import { ShowSingleComponent } from './tours/shows/show-single/show-single.component';
+import { ShowSingleComponent } from "./tours/shows/show-single/show-single.component";
 
 @NgModule({
   declarations: [
@@ -94,6 +94,45 @@ export class AppModule {
 
     automapper
       .createMap("TourFormModel", "TourWithManagerForCreation")
+      .forSourceMember(
+        "band",
+        (opts: AutoMapperJs.ISourceMemberConfigurationOptions) => {
+          opts.ignore();
+        }
+      )
+      .forSourceMember(
+        "manager",
+        (opts: AutoMapperJs.ISourceMemberConfigurationOptions) => {
+          opts.ignore();
+        }
+      )
+      .forMember("bandid", function(opts) {
+        opts.mapFrom("band");
+      })
+      .forMember("managerid", function(opts) {
+        opts.mapFrom("manager");
+      });
+
+    automapper
+      .createMap("TourFormModel", "TourWithShowsForCreation")
+      .forSourceMember(
+        "band",
+        (opts: AutoMapperJs.ISourceMemberConfigurationOptions) => {
+          opts.ignore();
+        }
+      )
+      .forSourceMember(
+        "manager",
+        (opts: AutoMapperJs.ISourceMemberConfigurationOptions) => {
+          opts.ignore();
+        }
+      )
+      .forMember("bandid", function(opts) {
+        opts.mapFrom("band");
+      });
+
+    automapper
+      .createMap("TourFormModel", "TourWithManagerAndShowsForCreation")
       .forSourceMember(
         "band",
         (opts: AutoMapperJs.ISourceMemberConfigurationOptions) => {

@@ -54,37 +54,47 @@ export class TourAddComponent implements OnInit, OnDestroy {
   }
 
   addTour(): void {
-    if (this.tourForm.dirty && this.tourForm.valid) {
+    if (this.tourForm.dirty) {
       if (this.isAdmin === true) {
-        // create TourWithManagerForCreation from the Form model
-        let tour = automapper.map(
-          "TourFormModel",
-          "TourWithManagerForCreation",
-          this.tourForm.value
-        );
-
-        console.log("TourFormModel = ", this.tourForm.value);
-        console.log("TourWithManagerForCreation = ", tour);
-
-        // post to service
-        this.tourService.addTourWithManager(tour).subscribe(() => {
-          this.router.navigateByUrl("/tours");
-        });
+        if (this.tourForm.value.shows.length) {
+          let tour = automapper.map(
+            "TourFormModel",
+            "TourWithManagerAndShowsForCreation",
+            this.tourForm.value
+          );
+          this.tourService.addTourWithManagerAndShows(tour).subscribe(() => {
+            this.router.navigateByUrl("/tours");
+          });
+        } else {
+          let tour = automapper.map(
+            "TourFormModel",
+            "TourWithManagerForCreation",
+            this.tourForm.value
+          );
+          this.tourService.addTourWithManager(tour).subscribe(() => {
+            this.router.navigateByUrl("/tours");
+          });
+        }
       } else {
-        // create TourForCreation from the Form model
-        let tour = automapper.map(
-          "TourFormModel",
-          "TourForCreation",
-          this.tourForm.value
-        );
-
-        console.log("TourFormModel = ", this.tourForm.value);
-        console.log("TourCreation = ", tour);
-
-        // post to service
-        this.tourService.addTour(tour).subscribe(() => {
-          this.router.navigateByUrl("/tours");
-        });
+        if (this.tourForm.value.shows.length) {
+          let tour = automapper.map(
+            "TourFormModel",
+            "TourWithShowsForCreation",
+            this.tourForm.value
+          );
+          this.tourService.addTourWithShows(tour).subscribe(() => {
+            this.router.navigateByUrl("/tours");
+          });
+        } else {
+          let tour = automapper.map(
+            "TourFormModel",
+            "TourForCreation",
+            this.tourForm.value
+          );
+          this.tourService.addTour(tour).subscribe(() => {
+            this.router.navigateByUrl("/tours");
+          });
+        }
       }
     }
   }

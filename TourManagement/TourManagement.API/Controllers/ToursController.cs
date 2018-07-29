@@ -164,7 +164,7 @@ namespace TourManagement.API.Controllers
 
             if (tourEntity.ManagerId == Guid.Empty)
             {
-                tourEntity.ManagerId = new Guid("d3ac6ded-c492-43a1-b94b-72e57c09c930");
+                tourEntity.ManagerId = new Guid("FEC0A4D6-5830-4EB8-8024-272BD5D6D2BB");
             }
 
             await _tourManagementRepository.AddTour(tourEntity);
