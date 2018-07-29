@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Band } from "../../shared/band.model";
 import { Manager } from "../../shared/manager.model";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormBuilder, FormArray } from "@angular/forms";
 import { Subscription } from "rxjs/Subscription";
 import { MasterDataService } from "../../shared/master-data.service";
 import { TourService } from "../shared/tour.service";
 import { Router } from "@angular/router";
+import { ShowSingleComponent } from "../shows/show-single/show-single.component";
 
 @Component({
   selector: "app-tour-add",
@@ -33,7 +34,8 @@ export class TourAddComponent implements OnInit, OnDestroy {
       title: [""],
       description: [""],
       startDate: [],
-      endDate: []
+      endDate: [],
+      shows: this.formBuilder.array([])
     });
 
     // get bands from master data service
@@ -85,6 +87,13 @@ export class TourAddComponent implements OnInit, OnDestroy {
         });
       }
     }
+  }
+
+  addShow(): void {
+    console.log("in addShow()");
+    let showsFormsArray = this.tourForm.get("shows") as FormArray;
+    // add the show
+    showsFormsArray.push(ShowSingleComponent.createShow());
   }
 
   ngOnDestroy() {}
