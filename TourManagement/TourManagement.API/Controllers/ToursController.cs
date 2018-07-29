@@ -77,6 +77,7 @@ namespace TourManagement.API.Controllers
 
         #region post
 
+        // without shows
         [HttpPost]
         [RequestHeaderMatchesMediaType("Content-Type", new[] { "application/json","application/vnd.marvin.tourforcreation+json" })]
         public async Task<IActionResult> AddTour([FromBody] TourForCreation tour)
@@ -106,6 +107,40 @@ namespace TourManagement.API.Controllers
             // return
             return await AddSpecificTour(tour);
         }
+
+        // With shows
+        [HttpPost]
+        [RequestHeaderMatchesMediaType("Content-Type", 
+            new[] { "application/vnd.marvin.tourwithshowsforcreation+json" })]
+        public async Task<IActionResult> AddTourWithShows([FromBody] TourWithShowsForCreation tour)
+        {
+            if (tour == null)
+            {
+                return BadRequest();
+            }
+
+            // validation of dto happens here
+
+            // return
+            return await AddSpecificTour(tour);
+        }
+
+        [HttpPost]
+        [RequestHeaderMatchesMediaType("Content-Type", 
+            new[] { "application/vnd.marvin.tourwithmanagerandshowsforcreation+json" })]
+        public async Task<IActionResult> AddTourWithManagerAndShows([FromBody] TourWithManagerAndShowsForCreation tour)
+        {
+            if (tour == null)
+            {
+                return BadRequest();
+            }
+
+            // validation of dto happens here
+
+            // return
+            return await AddSpecificTour(tour);
+        }
+
 
         #endregion
 

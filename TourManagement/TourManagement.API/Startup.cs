@@ -35,6 +35,8 @@ namespace TourManagement.API
                 {
                     jsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tour+json");
                     jsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourwithestimatedprofits+json");
+
+                    // with shows
                     jsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourwithshows+json");
                     jsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourwithestimatedprofitsandshows+json");
                 }
@@ -45,6 +47,11 @@ namespace TourManagement.API
                 {
                     jsonInputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourforcreation+json");
                     jsonInputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourwithmanagerforcreation+json");
+
+                    // with shows
+                    jsonInputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourwithshowsforcreation+json");
+                    jsonInputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourwithmanagerandshowsforcreation+json");
+
                 }
 
             })
@@ -125,6 +132,11 @@ namespace TourManagement.API
                 // DTO to entities
                 config.CreateMap<Dtos.TourForCreation, Entities.Tour>();
                 config.CreateMap<Dtos.TourWithManagerForCreation, Entities.Tour>();
+
+                // with shows
+                config.CreateMap<Dtos.TourWithShowsForCreation, Entities.Tour>();
+                config.CreateMap<Dtos.TourWithManagerForCreation, Entities.Tour>();
+                config.CreateMap<Dtos.ShowForCreation, Entities.Show>();
 
             });
 
