@@ -4,6 +4,7 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/throw";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/do";
+import { Operation } from "fast-json-patch";
 
 import { Tour } from "./models/tour.model";
 import { BaseService } from "../../shared/base.service";
@@ -97,6 +98,15 @@ export class TourService extends BaseService {
         "Content-Type":
           "application/vnd.marvin.tourwithmanagerandshowsforcreation+json"
       }
+    });
+  }
+
+  partiallyUpdateTour(
+    tourId: string,
+    patchDocument: Operation[]
+  ): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/tours/${tourId}`, patchDocument, {
+      headers: { "Content-Type": "application/json-patch+json" }
     });
   }
 }

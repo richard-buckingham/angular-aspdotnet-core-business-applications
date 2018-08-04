@@ -157,5 +157,7 @@ export class AppModule {
       "ShowCollectionFormModelShowsArray",
       "ShowCollectionForCreation"
     );
+
+    automapper.createMap("TourFormModel", "TourForUpdate");
   }
 }
