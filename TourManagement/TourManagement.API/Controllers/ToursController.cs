@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -179,6 +180,38 @@ namespace TourManagement.API.Controllers
             return CreatedAtRoute("GetTour",
                 new { tourId = tourToReturn.TourId },
                 tourToReturn);
+        }
+
+        [HttpPatch("{tourId}")]
+        public async Task<IActionResult> PartiallyUpdateTour(Guid tourId, 
+                                                              [FromBody] JsonPatchDocument<TourForUpdate> jsonPatchDocument)
+        {
+            if (jsonPatchDocument == null)
+            {
+                return BadRequest();
+            }
+
+            var tourFromRepo = await _tourManagementRepository.GetTour(tourId);
+
+            if (tourFromRepo == null)
+            {
+                return BadRequest();
+            }
+
+            var tourToPatch = Mapper.Map<TourForUpdate>(tourFromRepo);
+
+            jsonPatchDocument.ApplyTo(tourToPatch);
+
+            Mapper.Map(tourToPatch, tourFromRepo);
+
+            await _tourManagementRepository.UpdateTour(tourFromRepo);
+
+            if (!await _tourManagementRepository.SaveAsync())
+            {
+                throw new Exception("Updating a tour failed on save.");
+            }
+
+            return NoContent();
         }
     }
 }

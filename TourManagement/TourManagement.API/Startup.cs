@@ -52,6 +52,7 @@ namespace TourManagement.API
                     jsonInputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourwithshowsforcreation+json");
                     jsonInputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.tourwithmanagerandshowsforcreation+json");
 
+                    jsonInputFormatter.SupportedMediaTypes.Add("application/json-patch+json");
                 }
 
             })
@@ -137,6 +138,9 @@ namespace TourManagement.API
                 config.CreateMap<Dtos.TourWithShowsForCreation, Entities.Tour>();
                 config.CreateMap<Dtos.TourWithManagerForCreation, Entities.Tour>();
                 config.CreateMap<Dtos.ShowForCreation, Entities.Show>();
+
+                // patch
+                config.CreateMap<Entities.Tour, Dtos.TourForUpdate>().ReverseMap();
 
             });
 
