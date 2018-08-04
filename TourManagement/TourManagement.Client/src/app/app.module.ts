@@ -151,5 +151,11 @@ export class AppModule {
       .forMember("managerid", function(opts) {
         opts.mapFrom("manager");
       });
+
+    // create a clone
+    automapper.createMap(
+      "ShowCollectionFormModelShowsArray",
+      "ShowCollectionForCreation"
+    );
   }
 }
