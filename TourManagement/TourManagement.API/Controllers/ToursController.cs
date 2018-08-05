@@ -10,7 +10,6 @@ using TourManagement.API.Dtos;
 using TourManagement.API.Helpers;
 using TourManagement.API.Services;
 
-
 namespace TourManagement.API.Controllers
 {
     [Route("api/tours")]
@@ -23,10 +22,7 @@ namespace TourManagement.API.Controllers
             _tourManagementRepository = tourManagementRepository;
         }
 
-        #region get
-
         [HttpGet]
-        [RequestHeaderMatchesMediaType("Accept", new[] { "application/json" })]
         public async Task<IActionResult> GetTours()
         {
             var toursFromRepo = await _tourManagementRepository.GetTours();
@@ -35,117 +31,106 @@ namespace TourManagement.API.Controllers
             return Ok(tours);
         }
 
+
+        // [HttpGet("{tourId}", Name = "GetTour")]
+        //public async Task<IActionResult> GetTour(Guid tourId)
+        //{
+        //    var tourFromRepo = await _tourManagementRepository.GetTour(tourId);
+
+        //    if (tourFromRepo == null)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    var tour = Mapper.Map<Tour>(tourFromRepo);
+
+        //    return Ok(tour);
+        // }        
+
         [HttpGet("{tourId}")]
         public async Task<IActionResult> GetDefaultTour(Guid tourId)
         {
-            if (Request.Headers.TryGetValue("Accept", out StringValues values))
+            if (Request.Headers.TryGetValue("Accept",
+                out StringValues values))
             {
-                Debug.WriteLine($"Accept Header(s): {string.Join(",", values)}");
+                Debug.WriteLine($"Accept header(s): {string.Join(",", values)}");
             }
+
             return await GetSpecificTour<Tour>(tourId);
         }
 
-
-        [HttpGet("{tourId}", Name ="GetTour")]
-        [RequestHeaderMatchesMediaType("Accept", new[] { "application/vnd.marvin.tour+json" })]
+        [HttpGet("{tourId}", Name = "GetTour")]
+        [RequestHeaderMatchesMediaType("Accept",
+            new[] { "application/vnd.marvin.tour+json" })]
         public async Task<IActionResult> GetTour(Guid tourId)
         {
-           return await GetSpecificTour<Tour>(tourId);
+            return await GetSpecificTour<Tour>(tourId);
         }
 
         [HttpGet("{tourId}")]
-        [RequestHeaderMatchesMediaType("Accept", new[] { "application/vnd.marvin.tourwithestimatedprofits+json" })]
+        [RequestHeaderMatchesMediaType("Accept",
+            new[] { "application/vnd.marvin.tourwithestimatedprofits+json" })]
         public async Task<IActionResult> GetTourWithEstimatedProfits(Guid tourId)
         {
             return await GetSpecificTour<TourWithEstimatedProfits>(tourId);
         }
 
         [HttpGet("{tourId}")]
-        [RequestHeaderMatchesMediaType("Accept", new[] { "application/vnd.marvin.tourwithshows+json" })]
+        [RequestHeaderMatchesMediaType("Accept",
+            new[] { "application/vnd.marvin.tourwithshows+json" })]
         public async Task<IActionResult> GetTourWithShows(Guid tourId)
         {
             return await GetSpecificTour<TourWithShows>(tourId, true);
         }
 
         [HttpGet("{tourId}")]
-        [RequestHeaderMatchesMediaType("Accept", new[] { "application/vnd.marvin.tourwithestimatedprofitsandshows+json" })]
+        [RequestHeaderMatchesMediaType("Accept",
+            new[] { "application/vnd.marvin.tourwithestimatedprofitsandshows+json" })]
         public async Task<IActionResult> GetTourWithEstimatedProfitsAndShows(Guid tourId)
         {
             return await GetSpecificTour<TourWithEstimatedProfitsAndShows>(tourId, true);
         }
 
-        #endregion
 
-        #region post
 
-        // without shows
         [HttpPost]
-        [RequestHeaderMatchesMediaType("Content-Type", new[] { "application/json","application/vnd.marvin.tourforcreation+json" })]
+        [RequestHeaderMatchesMediaType("Content-Type",
+            new[] { "application/json",
+                    "application/vnd.marvin.tourforcreation+json" })]
         public async Task<IActionResult> AddTour([FromBody] TourForCreation tour)
         {
-            if (tour == null)
-            {
-                return BadRequest();
-            }
-
-            // validation of dto happens here
-
-            // return
             return await AddSpecificTour(tour);
         }
 
         [HttpPost]
-        [RequestHeaderMatchesMediaType("Content-Type", new[] { "application/vnd.marvin.tourwithmanagerforcreation+json" })]
-        public async Task<IActionResult> AddTourWithManager([FromBody] TourWithManagerForCreation tour)
+        [RequestHeaderMatchesMediaType("Content-Type",
+            new[] { "application/vnd.marvin.tourwithmanagerforcreation+json" })]
+        public async Task<IActionResult> AddTourWithManager(
+            [FromBody] TourWithManagerForCreation tour)
         {
-            if (tour == null)
-            {
-                return BadRequest();
-            }
-
-            // validation of dto happens here
-
-            // return
             return await AddSpecificTour(tour);
         }
 
-        // With shows
         [HttpPost]
-        [RequestHeaderMatchesMediaType("Content-Type", 
+        [RequestHeaderMatchesMediaType("Content-Type",
             new[] { "application/vnd.marvin.tourwithshowsforcreation+json" })]
-        public async Task<IActionResult> AddTourWithShows([FromBody] TourWithShowsForCreation tour)
+        public async Task<IActionResult> AddTourWithShows(
+            [FromBody] TourWithShowsForCreation tour)
         {
-            if (tour == null)
-            {
-                return BadRequest();
-            }
-
-            // validation of dto happens here
-
-            // return
             return await AddSpecificTour(tour);
         }
 
         [HttpPost]
-        [RequestHeaderMatchesMediaType("Content-Type", 
+        [RequestHeaderMatchesMediaType("Content-Type",
             new[] { "application/vnd.marvin.tourwithmanagerandshowsforcreation+json" })]
-        public async Task<IActionResult> AddTourWithManagerAndShows([FromBody] TourWithManagerAndShowsForCreation tour)
+        public async Task<IActionResult> AddTourWithManagerAndShows(
+            [FromBody] TourWithManagerAndShowsForCreation tour)
         {
-            if (tour == null)
-            {
-                return BadRequest();
-            }
-
-            // validation of dto happens here
-
-            // return
             return await AddSpecificTour(tour);
         }
 
-
-        #endregion
-
-        private async Task<IActionResult> GetSpecificTour<T>(Guid tourId, bool includeShows = false) where T : class
+        private async Task<IActionResult> GetSpecificTour<T>(Guid tourId,
+                bool includeShows = false) where T : class
         {
             var tourFromRepo = await _tourManagementRepository.GetTour(tourId, includeShows);
 
@@ -154,9 +139,7 @@ namespace TourManagement.API.Controllers
                 return BadRequest();
             }
 
-            var tour = Mapper.Map<T>(tourFromRepo);
-
-            return Ok(tour);
+            return Ok(Mapper.Map<T>(tourFromRepo));
         }
 
         public async Task<IActionResult> AddSpecificTour<T>(T tour) where T : class
@@ -168,14 +151,14 @@ namespace TourManagement.API.Controllers
 
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return new UnprocessableEntityObjectResult(ModelState);
             }
 
             var tourEntity = Mapper.Map<Entities.Tour>(tour);
 
             if (tourEntity.ManagerId == Guid.Empty)
             {
-                tourEntity.ManagerId = new Guid("FEC0A4D6-5830-4EB8-8024-272BD5D6D2BB");
+                tourEntity.ManagerId = new Guid("fec0a4d6-5830-4eb8-8024-272bd5d6d2bb");
             }
 
             await _tourManagementRepository.AddTour(tourEntity);
@@ -193,8 +176,8 @@ namespace TourManagement.API.Controllers
         }
 
         [HttpPatch("{tourId}")]
-        public async Task<IActionResult> PartiallyUpdateTour(Guid tourId, 
-                                                              [FromBody] JsonPatchDocument<TourForUpdate> jsonPatchDocument)
+        public async Task<IActionResult> PartiallyUpdateTour(Guid tourId,
+          [FromBody] JsonPatchDocument<TourForUpdate> jsonPatchDocument)
         {
             if (jsonPatchDocument == null)
             {
@@ -212,15 +195,14 @@ namespace TourManagement.API.Controllers
 
             jsonPatchDocument.ApplyTo(tourToPatch, ModelState);
 
-            // validate the JsonPatchDocument that was posted to the api
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return new UnprocessableEntityObjectResult(ModelState);
             }
-            // validate the model we are trying to update
+
             if (!TryValidateModel(tourToPatch))
             {
-                return BadRequest();
+                return new UnprocessableEntityObjectResult(ModelState);
             }
 
             Mapper.Map(tourToPatch, tourFromRepo);
