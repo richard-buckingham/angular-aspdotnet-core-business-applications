@@ -210,7 +210,18 @@ namespace TourManagement.API.Controllers
 
             var tourToPatch = Mapper.Map<TourForUpdate>(tourFromRepo);
 
-            jsonPatchDocument.ApplyTo(tourToPatch);
+            jsonPatchDocument.ApplyTo(tourToPatch, ModelState);
+
+            // validate the JsonPatchDocument that was posted to the api
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            // validate the model we are trying to update
+            if (!TryValidateModel(tourToPatch))
+            {
+                return BadRequest();
+            }
 
             Mapper.Map(tourToPatch, tourFromRepo);
 
