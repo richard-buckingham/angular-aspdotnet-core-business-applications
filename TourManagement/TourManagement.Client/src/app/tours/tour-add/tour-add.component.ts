@@ -54,7 +54,7 @@ export class TourAddComponent implements OnInit, OnDestroy {
   }
 
   addTour(): void {
-    if (this.tourForm.dirty && this.tourForm.valid) {
+    if (this.tourForm.dirty { //} && this.tourForm.valid) {
       if (this.isAdmin === true) {
         if (this.tourForm.value.shows.length) {
           let tour = automapper.map(

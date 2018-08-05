@@ -161,6 +161,16 @@ namespace TourManagement.API.Controllers
 
         public async Task<IActionResult> AddSpecificTour<T>(T tour) where T : class
         {
+            if (tour == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var tourEntity = Mapper.Map<Entities.Tour>(tour);
 
             if (tourEntity.ManagerId == Guid.Empty)
