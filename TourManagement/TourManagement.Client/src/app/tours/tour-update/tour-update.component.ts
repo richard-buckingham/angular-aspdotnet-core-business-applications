@@ -6,7 +6,12 @@ import { Band } from "../../shared/band.model";
 import { Subscription } from "rxjs/Subscription";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DatePipe } from "@angular/common";
-import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators
+} from "@angular/forms";
 import { TourForUpdate } from "../shared/models/tour-for-update.model";
 import { compare } from "fast-json-patch";
 
@@ -33,7 +38,7 @@ export class TourUpdateComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // define the tourForm (with empty default values)
     this.tourForm = this.formBuilder.group({
-      title: [""],
+      title: ["", [Validators.required, Validators.maxLength(200)]],
       description: [""],
       startDate: [],
       endDate: []
@@ -75,7 +80,7 @@ export class TourUpdateComponent implements OnInit, OnDestroy {
   }
 
   saveTour(): void {
-    if (this.tourForm.dirty) {
+    if (this.tourForm.dirty && this.tourForm.valid) {
       // TODO
       // [
       //   { op: "replace", path: "/description", value: "Updated description"}
