@@ -26,6 +26,7 @@ import { WriteOutJsonInterceptor } from "./shared/write-out-json-interceptor";
 import { EnsureAcceptHeaderinterceptor } from "./shared/interceptors/ensure-accept-headerinterceptor";
 import { ShowSingleComponent } from "./tours/shows/show-single/show-single.component";
 import { OpenIdConnectService } from "./security/open-id-connect.service";
+import { SigninOidcComponent } from './security/signin-oidc/signin-oidc.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { OpenIdConnectService } from "./security/open-id-connect.service";
     ToursComponent,
     TourUpdateComponent,
     ShowAddComponent,
-    ShowSingleComponent
+    ShowSingleComponent,
+    SigninOidcComponent
   ],
   imports: [
     BrowserModule,
