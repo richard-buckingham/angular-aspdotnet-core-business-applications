@@ -25,6 +25,7 @@ import { HandleHttpErrorInterceptor } from "./shared/handle-http-error-intercept
 import { WriteOutJsonInterceptor } from "./shared/write-out-json-interceptor";
 import { EnsureAcceptHeaderinterceptor } from "./shared/interceptors/ensure-accept-headerinterceptor";
 import { ShowSingleComponent } from "./tours/shows/show-single/show-single.component";
+import { OpenIdConnectService } from "./security/open-id-connect.service";
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { ShowSingleComponent } from "./tours/shows/show-single/show-single.compo
     TourService,
     MasterDataService,
     ShowService,
-    DatePipe
+    DatePipe,
+    OpenIdConnectService
   ],
   bootstrap: [AppComponent]
 })
