@@ -26,6 +26,13 @@ export class OpenIdConnectService {
       }
       this.currentUser = user;
     });
+
+    this.userManager.events.addUserUnloaded(e => {
+      if (!environment.production) {
+        console.log("User unloaded");
+      }
+      this.currentUser = null;
+    });
   }
 
   // create an authentication request to our identity provider
@@ -42,6 +49,14 @@ export class OpenIdConnectService {
     this.userManager.signinRedirectCallback().then(function(user) {
       if (!environment.production) {
         console.log("callback after signin handled. user = ", user);
+      }
+    });
+  }
+
+  triggerSignOut() {
+    this.userManager.signoutRedirect().then(function(resp) {
+      if (!environment.production) {
+        console.log("Redirection to sign out triggered.", resp);
       }
     });
   }
